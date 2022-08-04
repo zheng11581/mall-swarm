@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.macro.mall</groupId>
@@ -25,14 +23,14 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skipTests>true</skipTests>
-        <docker.host>http://192.168.3.105:2375</docker.host>
+        <docker.host>http://localhost:2375</docker.host>
         <docker.maven.plugin.version>0.40.0</docker.maven.plugin.version>
         <java.version>1.8</java.version>
         <spring-boot.version>2.7.0</spring-boot.version>
@@ -214,61 +212,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>io.fabric8</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>${docker.maven.plugin.version}</version>
-                    <executions>
-                        <!--如果想在项目打包时构建镜像添加-->
-                        <execution>
-                            <id>build-image</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <!-- Docker 远程管理地址-->
-                        <dockerHost>${docker.host}</dockerHost>
-                        <images>
-                            <image>
-                                <!--定义镜像名称-->
-                                <name>mall/${project.name}:${project.version}</name>
-                                <!--定义镜像构建行为-->
-                                <build>
-                                    <!--定义基础镜像-->
-                                    <from>java:8</from>
-                                    <args>
-                                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                                    </args>
-                                    <!--定义哪些文件拷贝到容器中-->
-                                    <assembly>
-                                        <!--定义拷贝到容器的目录-->
-                                        <targetDir>/</targetDir>
-                                        <!--只拷贝生成的jar包-->
-                                        <descriptorRef>artifact</descriptorRef>
-                                    </assembly>
-                                    <!--定义容器启动命令-->
-                                    <entryPoint>["java", "-jar","-Dspring.profiles.active=prod","/${project.build.finalName}.jar"]</entryPoint>
-                                    <!--定义维护者-->
-                                    <maintainer>macrozheng</maintainer>
-                                </build>
-                            </image>
-                        </images>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-
 </project>
