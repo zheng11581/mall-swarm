@@ -1,10 +1,11 @@
-# syntax = docker/dockerfile:experimental
 FROM maven:3.8.5-openjdk-8-slim as maven
-WORKDIR /
-COPY . .
-RUN --mount=type=cache,target=/root/.m2,rw mvn -B package
+ARG  MOD_NAME=mall-admin
+WORKDIR /mall-swarm
+COPY .. .
+# RUN mvn install -N
+RUN mvn clean package -pl ${MOD_NAME}/ -am -Dmaven.test.skip=true
 
-FROM jdk:8
-ARG  BUILD_NAME=mall-admin-1.0-SNAPSHOT
-COPY --from=maven ./target/${BUILD_NAME}.jar /
-CMD java -jar -Dspring.profiles.active=prod /${BUILD_NAME}.jar
+FROM azul/zulu-openjdk-alpine:8
+
+COPY --from=maven ./${MOD_NAME}/target/${MOD_NAME}-1.0-SNAPSHOT.jar /
+CMD java -jar -Dspring.profiles.active=prod /${MOD_NAME}-1.0-SNAPSHOT.jar
