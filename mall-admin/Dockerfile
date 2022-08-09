@@ -8,4 +8,5 @@ RUN mvn clean package -pl ${MOD_NAME}/ -am -Dmaven.test.skip=true
 FROM azul/zulu-openjdk-alpine:8
 ARG  MOD_NAME=mall-admin
 COPY --from=maven /mall-swarm/${MOD_NAME}/target/${MOD_NAME}-1.0-SNAPSHOT.jar /
+WORKDIR /mall-swarm
 CMD java -jar -Dspring.profiles.active=prod /${MOD_NAME}-1.0-SNAPSHOT.jar
