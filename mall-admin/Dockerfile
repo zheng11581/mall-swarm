@@ -1,12 +1,12 @@
 FROM maven:3.8.5-openjdk-8-slim as maven
 ARG  MOD_NAME=mall-admin
 WORKDIR /mall-swarm
-COPY . .
+COPY . /mall-swarm/
 RUN mvn clean install -N
 RUN mvn clean package -pl ${MOD_NAME}/ -am -Dmaven.test.skip=true
 
 FROM azul/zulu-openjdk-alpine:8
 ARG  MOD_NAME=mall-admin
 COPY --from=maven /mall-swarm/${MOD_NAME}/target/${MOD_NAME}-1.0-SNAPSHOT.jar /
-WORKDIR /mall-swarm
+WORKDIR /mall-swarm/
 CMD java -jar -Dspring.profiles.active=prod /${MOD_NAME}-1.0-SNAPSHOT.jar
