@@ -1,4 +1,4 @@
-FROM maven:3.8.5-openjdk-8-slim as maven
+FROM maven:3.8.5-openjdk-8 as maven
 ARG  MOD_NAME=mall-admin
 RUN mkdir /${MOD_NAME}
 WORKDIR /${MOD_NAME}
