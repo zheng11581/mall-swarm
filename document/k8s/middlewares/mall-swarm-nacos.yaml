@@ -33,7 +33,7 @@ spec:
               value: "mysql"
           ports:
             - containerPort: 8848
-              name: "swarm-nacos-port"
+              name: nacos-port
           volumeMounts:
             - mountPath: /home/nacos/logs
               name: swarm-nacos
