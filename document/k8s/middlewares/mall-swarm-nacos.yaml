@@ -31,28 +31,18 @@ spec:
               value: "standalone"
             - name: "SPRING_DATASOURCE_PLATFORM"
               value: "mysql"
-            - name: "MYSQL_SERVICE_HOST"
-              value: "mall-swarm-mysql"
-            - name: "MYSQL_SERVICE_DB_NAME"
-              value: "nacos"
-            - name: "MYSQL_SERVICE_PORT"
-              value: "3306"
-            - name: "MYSQL_SERVICE_USER"
-              value: "root"
-            - name: "MYSQL_SERVICE_PASSWORD"
-              value: "swarm123"
           ports:
             - containerPort: 8848
-              name: "nacos-port"
+              name: "swarm-nacos-port"
           volumeMounts:
             - mountPath: /home/nacos/logs
-              name: nacos-pv
+              name: swarm-nacos
               subPath: logs
-            - name: nacos-config
+            - name: swarm-nacos-config
               mountPath: /home/nacos/init.d/custom.properties
               subPath: custom.properties
             - mountPath: /etc/localtime
-              name: nacos-time
+              name: swarm-nacos-time
           startupProbe:
             initialDelaySeconds: 15
             periodSeconds: 10
@@ -60,14 +50,14 @@ spec:
               host: mysql
               port: 3306
       volumes:
-        - name: nacos-pv
+        - name: swarm-nacos
           hostPath:
             path: /var/lib/swarm/nacos
             type: DirectoryOrCreate
-        - name: nacos-config
+        - name: swarm-nacos-config
           configMap:
             name: custom.properties
-        - name: nacos-time
+        - name: swarm-nacos-time
           hostPath:
             path: /etc/localtime
 ---
