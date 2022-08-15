@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mall-auth-deployment
-  namespace: default
+  name: mall-gateway-deployment
+  namespace: mall-swarm
   labels:
-    app: mall-auth
+    app: mall-gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mall-auth
+      app: mall-gateway
   template:
     metadata:
       labels:
-        app: mall-auth
+        app: mall-gateway
     spec:
       containers:
-        - name: mall-auth
+        - name: mall-gateway
           # 指定Docker Hub中的镜像地址
-          image: macrodocker/mall-auth:1.0-SNAPSHOT
+          image: macrodocker/mall-gateway:1.0-SNAPSHOT
           ports:
-            - containerPort: 8401
+            - containerPort: 8201
           env:
             # 指定环境
             - name: spring.profiles.active
@@ -39,5 +39,5 @@ spec:
       volumes:
         - name: log-volume
           hostPath:
-            path: /mydata/app/mall-auth/logs
+            path: /mydata/app/mall-gateway/logs
             type: DirectoryOrCreate

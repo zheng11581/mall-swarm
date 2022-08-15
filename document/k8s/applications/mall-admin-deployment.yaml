@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mall-gateway-deployment
-  namespace: default
+  name: mall-admin-deployment
+  namespace: mall-swarm
   labels:
-    app: mall-gateway
+    app: mall-admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mall-gateway
+      app: mall-admin
   template:
     metadata:
       labels:
-        app: mall-gateway
+        app: mall-admin
     spec:
       containers:
-        - name: mall-gateway
+        - name: mall-admin
           # 指定Docker Hub中的镜像地址
-          image: macrodocker/mall-gateway:1.0-SNAPSHOT
+          image: goharbor.com/mall-swarm/mall-admin:latest
           ports:
-            - containerPort: 8201
+            - containerPort: 8080
           env:
             # 指定环境
             - name: spring.profiles.active
@@ -30,14 +30,14 @@ spec:
               value: Asia/Shanghai
             # 指定Nacos地址
             - name: spring.cloud.nacos.discovery.server-addr
-              value: http://192.168.3.101:8848
+              value: http://nacos-0.nacos-headless.default:8848,http://nacos-0.nacos-headless.default:8848
             - name: spring.cloud.nacos.config.server-addr
-              value: http://192.168.3.101:8848
+              value: http://nacos-1.nacos-headless.default:8848,http://nacos-1.nacos-headless.default:8848
           volumeMounts:
             - mountPath: /var/logs
               name: log-volume
       volumes:
         - name: log-volume
           hostPath:
-            path: /mydata/app/mall-gateway/logs
+            path: /var/lib/swarm/mall-admin/logs
             type: DirectoryOrCreate

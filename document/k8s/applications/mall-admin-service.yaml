@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mall-monitor-service
-  namespace: default
+  name: mall-admin-service
+  namespace: mall-swarm
 spec:
   type: ClusterIP
   selector:
-    app: mall-monitor
+    app: mall-admin
   ports:
     - name: http
       protocol: TCP
-      port: 8101
-      targetPort: 8101
+      port: 8080
+      targetPort: 8080

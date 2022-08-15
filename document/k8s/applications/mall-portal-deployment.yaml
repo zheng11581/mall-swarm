@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mall-portal-deployment
-  namespace: default
+  namespace: mall-swarm
   labels:
     app: mall-portal
 spec:
