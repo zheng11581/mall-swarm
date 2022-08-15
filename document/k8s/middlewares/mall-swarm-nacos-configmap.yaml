@@ -3,8 +3,6 @@ kind: ConfigMap
 metadata:
   name: custom.properties
   namespace: mall-swarm
-  labels:
-    usage: demo
 data:
   custom.properties: |-
     server.servlet.contextPath=/nacos
