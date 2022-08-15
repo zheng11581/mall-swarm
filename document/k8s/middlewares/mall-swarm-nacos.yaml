@@ -39,7 +39,7 @@ spec:
               name: swarm-nacos
               subPath: logs
             - name: swarm-nacos-config
-              mountPath: /home/nacos/init.d/custom.properties
+              mountPath: /home/nacos/conf/custom.properties
               subPath: custom.properties
             - mountPath: /etc/localtime
               name: swarm-nacos-time
