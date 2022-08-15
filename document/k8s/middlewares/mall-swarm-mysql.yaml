@@ -31,14 +31,14 @@ spec:
               value: "swarm123"
           volumeMounts:
             - mountPath: /var/lib/mysql
-              name: mysql-swarm
+              name: swarm-mysql
           ports:
             - containerPort: 3306
               name: "mysql-port"
       volumes:
-        - name: mysql-swarm
+        - name: swarm-mysql
           hostPath:
-            path: /var/lib/mysql/swarm
+            path: /var/lib/swarm/mysql
             type: DirectoryOrCreate
 ---
 apiVersion: v1
