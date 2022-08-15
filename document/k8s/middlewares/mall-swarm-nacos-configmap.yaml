@@ -8,7 +8,7 @@ data:
     server.servlet.contextPath=/nacos
     server.port=8848
     db.num=1
-    db.url.0=jdbc:mysql://mall-swarm-mysql:3306/nacos?characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    db.url.0=jdbc:mysql://mall-swarm-mysql.mall-swarm.svc.cluster.local:3306/nacos?characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
     db.user=root
     db.password=swarm123
     management.metrics.export.elastic.enabled=false
