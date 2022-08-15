@@ -52,6 +52,6 @@ spec:
       name: "mall-swarm-rabbitmq-serve"
     - port: 15672
       targetPort: 15672
-      name: "mall-swarm-rabbitmq-serve"
+      name: "mall-swarm-rabbitmq-manage"
   selector:
     app: rabbitmq
