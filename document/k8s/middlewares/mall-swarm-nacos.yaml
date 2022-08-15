@@ -47,8 +47,7 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 10
             tcpSocket:
-              host: mysql
-              port: 3306
+              port: 8848
       volumes:
         - name: swarm-nacos
           hostPath:
