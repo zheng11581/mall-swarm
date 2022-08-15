@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nacos
+  name: mall-swarm-nacos
   namespace: mall-swarm
 spec:
   replicas: 1
