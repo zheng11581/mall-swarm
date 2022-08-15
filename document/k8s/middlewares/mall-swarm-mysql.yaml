@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mall-swarm-mysql
+  namespace: mall-swarm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - image: mysql:5.7
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 100Mi
+          imagePullPolicy: IfNotPresent
+          name: mall-swarm-mysql
+          env:
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_DATABASE
+              value: "swarm"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "swarm123"
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-swarm
+          ports:
+            - containerPort: 3306
+              name: "mysql-port"
+      volumes:
+        - name: mysql-swarm
+          hostPath:
+            path: /var/lib/mysql/mysql-swarm
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mall-swarm-mysql
+  namespace: mall-swarm
+  labels:
+    name: mysql
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+      name: "mall-swarm-mysql"
+  selector:
+    app: mysql
