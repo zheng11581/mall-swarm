@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: elasticsearch
-          image: goharbor.com/devops/elasticsearch:7.17.3
+          image: goharbor.com/devops/elasticsearch-ik:7.17.3
           imagePullPolicy: IfNotPresent
           resources:
             limits:
@@ -54,8 +54,10 @@ spec:
         - name: fix-permissions
           image: busybox
           imagePullPolicy: IfNotPresent
-          command:
-            ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
+          command: 
+          - "sh"
+          - "-c"
+          - "chown -R 1000:1000 /usr/share/elasticsearch/{data,plugin}"
           securityContext:
             privileged: true
           volumeMounts:
@@ -103,3 +105,4 @@ spec:
       name: es-serve
     - port: 9300
       name: es-manage
+
