@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: elasticsearch
-          image: goharbor.com/devops/elasticsearch-ik:7.17.3
+          image: goharbor.com/devops/elasticsearch:7.17.3
           imagePullPolicy: IfNotPresent
           resources:
             limits:
