@@ -8,6 +8,7 @@ metadata:
 spec:
   ports:
     - port: 5601
+      name: kibana-manage
   selector:
     app: kibana
 ---
@@ -30,7 +31,7 @@ spec:
     spec:
       containers:
         - name: kibana
-          image: docker.elastic.co/kibana/kibana:7.2.0
+          image: goharbor.com/devops/kibana:7.17.3
           imagePullPolicy: IfNotPresent
           resources:
             limits:
@@ -44,3 +45,4 @@ spec:
               value: http://elasticsearch.mall-swarm.svc.cluster.local:9200
           ports:
             - containerPort: 5601
+              name: kibana-manage
