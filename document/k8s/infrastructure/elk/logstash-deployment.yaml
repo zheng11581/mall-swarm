@@ -50,7 +50,7 @@ data:
     }
     output {
       elasticsearch {
-        hosts => "es-cluster-0.elasticsearch.svc.cluster.local:9200"
+        hosts => "es-cluster-0.elasticsearch.mall-swarm.svc.cluster.local:9200"
         index => "mall-%{type}-%{+YYYY.MM.dd}"
       }
     }
