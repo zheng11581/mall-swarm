@@ -1,0 +1,148 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: logstash
+  namespace: mall-swarm
+  labels:
+    app: logstash
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: logstash
+  labels:
+    app: logstash
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - namespaces
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: logstash
+roleRef:
+  kind: ClusterRole
+  name: logstash
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: logstash
+    namespace: mall-swarm
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-conf
+  namespace: mall-swarm
+data:
+  custom.properties: |-
+    input {
+      tcp {
+        mode => "server"
+        host => "0.0.0.0"
+        port => 4560
+        codec => json_lines
+        type => "debug"
+      }
+      tcp {
+        mode => "server"
+        host => "0.0.0.0"
+        port => 4561
+        codec => json_lines
+        type => "error"
+      }
+      tcp {
+        mode => "server"
+        host => "0.0.0.0"
+        port => 4562
+        codec => json_lines
+        type => "business"
+      }
+      tcp {
+        mode => "server"
+        host => "0.0.0.0"
+        port => 4563
+        codec => json_lines
+        type => "record"
+      }
+    }
+    filter{
+      if [type] == "record" {
+        mutate {
+          remove_field => "port"
+          remove_field => "host"
+          remove_field => "@version"
+        }
+        json {
+          source => "message"
+          remove_field => ["message"]
+        }
+      }
+    }
+    output {
+      elasticsearch {
+        hosts => "es-cluster-0.elasticsearch.svc.cluster.local:9200"
+        index => "mall-%{type}-%{+YYYY.MM.dd}"
+      }
+    }
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logstash
+  namespace: mall-swarm
+  labels:
+    app: logstash
+spec:
+  selector:
+    matchLabels:
+      app: logstash
+  template:
+    metadata:
+      labels:
+        app: logstash
+    spec:
+      serviceAccount: logstash
+      serviceAccountName: logstash
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      containers:
+        - name: logstash
+          image: logstash:7.17.3
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: "Asia/Shanghai"
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          volumeMounts:
+            - name: logstash-conf
+              mountPath: /usr/share/logstash/pipeline/logstash.conf
+            - name: varlog
+              mountPath: /var/log
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: logstash-conf
+          configMap:
+            name: logstash.conf
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
