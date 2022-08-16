@@ -63,7 +63,7 @@ spec:
       serviceAccountName: nfs-provisioner
       initContainers:
         - name: peer-finder-plugin-install
-          image: nacos/nacos-peer-finder-plugin:1.1
+          image: goharbor.com/devops/nacos-peer-finder-plugin:1.1
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /home/nacos/plugins/peer-finder
@@ -72,7 +72,7 @@ spec:
       containers:
         - name: nacos
           imagePullPolicy: Always
-          image: nacos/nacos-server:v2.1.0
+          image: goharbor.com/devops/nacos-server:v2.1.0
           resources:
             requests:
               memory: "512Mi"

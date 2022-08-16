@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: mall-swarm-rabbitmq
-          image: rabbitmq:3.9-management
+          image: goharbor.com/devops/rabbitmq:3.9-management
           resources:
             limits:
               cpu: 1000m

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: mall-swarm-redis
-          image: redis:7
+          image: goharbor.com/devops/redis:7
           resources:
             limits:
               cpu: 1000m
