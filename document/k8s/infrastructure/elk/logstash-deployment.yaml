@@ -89,6 +89,7 @@ spec:
           volumeMounts:
             - name: logstash-conf
               mountPath: /usr/share/logstash/pipeline/logstash.conf
+              subPath: logstash.conf
       terminationGracePeriodSeconds: 30
       volumes:
         - name: logstash-conf
