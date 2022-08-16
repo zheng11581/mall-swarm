@@ -54,10 +54,8 @@ spec:
         - name: fix-permissions
           image: busybox
           imagePullPolicy: IfNotPresent
-          command: 
-          - "sh"
-          - "-c"
-          - "chown -R 1000:1000 /usr/share/elasticsearch/{data,plugin}"
+          command:
+            ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/{data,plugin}"]
           securityContext:
             privileged: true
           volumeMounts:
@@ -105,4 +103,3 @@ spec:
       name: es-serve
     - port: 9300
       name: es-manage
-
