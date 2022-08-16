@@ -42,7 +42,7 @@ spec:
               memory: 100Mi
           env:
             - name: ELASTICSEARCH_URL
-              value: http://elasticsearch.mall-swarm.svc.cluster.local:9200
+              value: http://es-cluster-0.elasticsearch.mall-swarm.svc.cluster.local:9200
           ports:
             - containerPort: 5601
               name: kibana-manage
