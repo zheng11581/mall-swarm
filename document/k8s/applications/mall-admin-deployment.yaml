@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mall-admin-deployment
+  name: mall-admin
   namespace: mall-swarm
   labels:
     app: mall-admin
@@ -19,6 +19,10 @@ spec:
         - name: mall-admin
           # 指定Docker Hub中的镜像地址
           image: goharbor.com/mall-swarm/mall-admin:latest
+          resources:
+            limits:
+              cpu: "500m"
+              memory: 1000Mi
           ports:
             - containerPort: 8080
           env:
@@ -33,11 +37,11 @@ spec:
               value: http://nacos-0.nacos-headless.default:8848,http://nacos-0.nacos-headless.default:8848
             - name: spring.cloud.nacos.config.server-addr
               value: http://nacos-1.nacos-headless.default:8848,http://nacos-1.nacos-headless.default:8848
-          volumeMounts:
-            - mountPath: /var/logs
-              name: log-volume
-      volumes:
-        - name: log-volume
-          hostPath:
-            path: /var/lib/swarm/mall-admin/logs
-            type: DirectoryOrCreate
+      #     volumeMounts:
+      #       - mountPath: /var/logs
+      #         name: log-volume
+      # volumes:
+      #   - name: log-volume
+      #     hostPath:
+      #       path: /var/lib/swarm/mall-admin/logs
+      #       type: DirectoryOrCreate
