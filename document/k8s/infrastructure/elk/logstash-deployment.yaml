@@ -79,6 +79,19 @@ spec:
           env:
             - name: TZ
               value: "Asia/Shanghai"
+          ports:
+            - containerPort: 4560
+              name: collector-4560
+              protocol: TCP
+            - containerPort: 4561
+              name: collector-4561
+              protocol: TCP
+            - containerPort: 4562
+              name: collector-4562
+              protocol: TCP
+            - containerPort: 4563
+              name: collector-4563
+              protocol: TCP
           resources:
             limits:
               cpu: "500m"
@@ -94,3 +107,23 @@ spec:
         - name: logstash-conf
           configMap:
             name: logstash.conf
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: logstash
+  namespace: mall-swarm
+  labels:
+    app: logstash
+spec:
+  selector:
+    app: logstash
+  ports:
+    - port: 4560
+      name: collector-4560
+    - port: 4561
+      name: collector-4561
+    - port: 4562
+      name: collector-4562
+    - port: 4563
+      name: collector-4563
