@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mall-monitor-deployment
+  name: mall-monitor
   namespace: mall-swarm
   labels:
     app: mall-monitor
@@ -18,7 +18,14 @@ spec:
       containers:
         - name: mall-monitor
           # 指定Docker Hub中的镜像地址
-          image: macrodocker/mall-monitor:1.0-SNAPSHOT
+          image: goharbor.com/mall-swarm/mall-monitor
+          resources:
+            limits:
+              cpu: "500m"
+              memory: 500Mi
+            requests:
+              cpu: "100m"
+              memory: 100Mi
           ports:
             - containerPort: 8101
           env:
@@ -30,14 +37,14 @@ spec:
               value: Asia/Shanghai
             # 指定Nacos地址
             - name: spring.cloud.nacos.discovery.server-addr
-              value: http://192.168.3.101:8848
+              value: http://nacos-0.nacos-headless.default:8848,http://nacos-0.nacos-headless.default:8848
             - name: spring.cloud.nacos.config.server-addr
-              value: http://192.168.3.101:8848
-          volumeMounts:
-            - mountPath: /var/logs
-              name: log-volume
-      volumes:
-        - name: log-volume
-          hostPath:
-            path: /mydata/app/mall-monitor/logs
-            type: DirectoryOrCreate
+              value: http://nacos-1.nacos-headless.default:8848,http://nacos-1.nacos-headless.default:8848
+      #     volumeMounts:
+      #       - mountPath: /var/logs
+      #         name: log-volume
+      # volumes:
+      #   - name: log-volume
+      #     hostPath:
+      #       path: /mydata/app/mall-monitor/logs
+      #       type: DirectoryOrCreate
