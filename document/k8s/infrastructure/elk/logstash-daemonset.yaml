@@ -94,13 +94,14 @@ data:
     }
 ---
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: logstash
   namespace: mall-swarm
   labels:
     app: logstash
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: logstash
@@ -111,9 +112,6 @@ spec:
     spec:
       serviceAccount: logstash
       serviceAccountName: logstash
-      tolerations:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
       containers:
         - name: logstash
           image: goharbor.com/devops/logstash:7.17.3
@@ -123,9 +121,10 @@ spec:
               value: "Asia/Shanghai"
           resources:
             limits:
+              cpu: "500m"
               memory: 512Mi
             requests:
-              cpu: 100m
+              cpu: "100m"
               memory: 200Mi
           volumeMounts:
             - name: logstash-conf
