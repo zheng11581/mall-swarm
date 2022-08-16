@@ -49,7 +49,7 @@ spec:
             - name: cluster.initial_master_nodes
               value: "es-cluster-0,es-cluster-1,es-cluster-2"
             - name: ES_JAVA_OPTS
-              value: "-Xms512m -Xmx1024m"
+              value: "-Xms1024m -Xmx1024m"
       initContainers:
         - name: fix-permissions
           image: busybox
