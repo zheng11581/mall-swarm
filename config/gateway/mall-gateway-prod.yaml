@@ -1,6 +1,6 @@
 spring:
   redis:
-    host: mall-swarm-redis.mall-swarm # Redis服务器地址
+    host: redis.mall-swarm # Redis服务器地址
     database: 0 # Redis数据库索引（默认为0）
     port: 6379 # Redis服务器连接端口
     password: #不设置密码
@@ -8,7 +8,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://mall-gateway:8201/mall-auth/rsa/publicKey'
+          jwk-set-uri: "http://mall-gateway:8201/mall-auth/rsa/publicKey"
 logging:
   file:
     path: /var/logs
