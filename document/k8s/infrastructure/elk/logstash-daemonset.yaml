@@ -39,7 +39,7 @@ subjects:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: logstash-conf
+  name: logstash.conf
   namespace: mall-swarm
 data:
   custom.properties: |-
