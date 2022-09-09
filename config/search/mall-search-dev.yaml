@@ -5,9 +5,9 @@ spring:
     password: root
   elasticsearch:
     uris: localhost:9200
-logging:
-  level:
-    root: info
-    com.macro.mall: debug
-logstash:
-  host: localhost
+# logging:
+#   level:
+#     root: info
+#     com.macro.mall: debug
+# logstash:
+#   host: localhost

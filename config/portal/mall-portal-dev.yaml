@@ -20,9 +20,9 @@ spring:
     username: mall
     password: mall
 # 日志配置
-logging:
-  level:
-    root: info
-    com.macro.mall: debug
-logstash:
-  host: localhost
+# logging:
+#   level:
+#     root: info
+#     com.macro.mall: debug
+# logstash:
+#   host: localhost

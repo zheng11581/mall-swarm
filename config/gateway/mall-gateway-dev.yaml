@@ -9,10 +9,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://localhost:8201/mall-auth/rsa/publicKey'
-logging:
-  level:
-    root: info
-    com.macro.mall: debug
-logstash:
-  host: localhost
+          jwk-set-uri: "http://localhost:8201/mall-auth/rsa/publicKey"
+# logging:
+#   level:
+#     root: info
+#     com.macro.mall: debug
+# logstash:
+#   host: localhost

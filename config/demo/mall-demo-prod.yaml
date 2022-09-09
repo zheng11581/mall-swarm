@@ -3,11 +3,11 @@ spring:
     url: jdbc:mysql://mysql.mall-swarm:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: swarm123
-logging:
-  file:
-    path: /var/logs
-  level:
-    root: info
-    com.macro.mall: info
-logstash:
-  host: logstash
+# logging:
+#   file:
+#     path: /var/logs
+#   level:
+#     root: info
+#     com.macro.mall: info
+# logstash:
+#   host: logstash

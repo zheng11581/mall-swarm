@@ -9,11 +9,11 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: "http://mall-gateway:8201/mall-auth/rsa/publicKey"
-logging:
-  file:
-    path: /var/logs
-  level:
-    root: info
-    com.macro.mall: info
-logstash:
-  host: logstash
+# logging:
+#   file:
+#     path: /var/logs
+#   level:
+#     root: info
+#     com.macro.mall: info
+# logstash:
+#   host: logstash
