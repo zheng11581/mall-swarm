@@ -4,7 +4,7 @@ spring:
     username: root
     password: swarm123
   elasticsearch:
-    uris: es-cluster-0.elasticsearch.mall-swarm.svc.cluster.local:9200
+    uris: es-cluster-0.elasticsearch.kube-logging.svc.cluster.local:9200
 management:
   health:
     elasticsearch:
